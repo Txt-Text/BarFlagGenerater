@@ -105,7 +105,7 @@ def _is_valid_hex(hexpart):
 
 def parse_strips(text):
     """
-    解析色条列表，返回 [(color, weight), ...]。
+    解析色带列表，返回 [(color, weight), ...]。
     接受: '#FF0000 1.0, #FFFFFF 1.5' / 'FF0000 1,FFFFFF' / 逗号或换行分隔。
     颜色可带/不带 #，自动补 #。
     比例可省略，默认 1.0。
@@ -124,7 +124,7 @@ def parse_strips(text):
             item)
         if not m:
             raise ValueError(
-                f"看不懂这一条色条: {item!r}"
+                f"无法解析这条色带: {item!r}"
                 f"（颜色应为 3/4/6/8 位十六进制或颜色名）"
             )
         color = m.group(1)
@@ -148,7 +148,7 @@ def parse_strips(text):
 
 def resolve_heights(strips, total_height):
     """
-    按比例把总高分配给每条色条，返回浮点高度列表。
+    按比例把总高分配给每条色带，返回浮点高度列表。
     末条用"总高 - 前面之和"补齐，消除浮点累积误差。
     """
     weights = [w for _, w in strips]
@@ -232,7 +232,7 @@ def load_preset(path):
     读取预设文件，返回 dict:
       {name, width, height, strips}
     strips 是 [(color, weight), ...]
-    非法行会警告并跳过；完全没有色条则抛 ValueError。
+    非法行会警告并跳过；完全没有色带则抛 ValueError。
     """
     preset = {
         'name': os.path.splitext(os.path.basename(path))[0],
@@ -248,11 +248,11 @@ def load_preset(path):
             # 空行 / 整行注释
             if not stripped or stripped.startswith('#'):
                 continue
-            # 色条段开始
+            # 色带段开始
             if stripped.lower().startswith('strips'):
                 in_strips = True
                 continue
-            # 色条行
+            # 色带行
             if in_strips:
                 try:
                     one = parse_strips(stripped)
@@ -286,13 +286,13 @@ def load_preset(path):
                 except ValueError:
                     pass
     if not preset['strips']:
-        raise ValueError(f"{os.path.basename(path)} 里没有可用色条")
+        raise ValueError(f"{os.path.basename(path)} 中无可用色带")
     return preset
 
 def save_preset(path, name, width, height, strips):
-    """写出预设文件（UTF-8，人读友好）"""
+    """写预设文件（UTF-8，人类可读）"""
     lines = [
-        "# 旗帜预设（可被文本编辑器编辑）",
+        "# 旗帜预设",
         f"name = {name}",
         f"resolution = {width}x{height}",
         "",
@@ -308,7 +308,7 @@ def save_preset(path, name, width, height, strips):
 # ============================ 图片生成 ============================
 
 def gen_svg(width, height, strips, heights, path):
-    """生成 SVG（纯文本拼接，零依赖）"""
+    """生成 SVG（纯文本拼接）"""
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" '
         f'width="{width}" height="{height}" viewBox="0 0 {width} {height}">'
@@ -421,7 +421,7 @@ def build_parser():
     """构造 argparse 解析器"""
     p = argparse.ArgumentParser(
         prog="BarFlagGenerater.py",
-        description="条形旗帜生成器（交互 / 命令行双模式）",
+        description="横条旗帜生成器（交互 / 命令行双模式）",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "示例:\n"
@@ -439,7 +439,7 @@ def build_parser():
     p.add_argument('-r', '--resolution', metavar='WxH',
                    help='分辨率，如 900x600')
     p.add_argument('-s', '--strips', metavar='LIST',
-                   help='色条列表，如 "#FF0000 1.0,#FFFFFF 1.5"')
+                   help='色带列表，如 "#FF0000 1.0,#FFFFFF 1.5"')
     p.add_argument('-f', '--format', dest='fmt', metavar='FMT',
                    choices=['svg', 'png', 'jpg', 'jpeg'],
                    help='输出格式: svg / png / jpg')
@@ -488,10 +488,10 @@ def main():
     print(f"{_GRAY}", end = "")
     print(f"================================================================================")
     print(f"")
-    print(f"条形旗帜生成器 v1.0")
+    print(f"横条旗帜生成器 v1.0")
     print(f"")
-    print(f"此工具可以生成以横条纯色色带构成的旗帜。如部分国旗、Pride旗等。")
-    print(f"本工具支持自定义分辨率、配色、色带宽度比例、图片类型等，并允许保存与加载预设。")
+    print(f"此工具可以生成以纯色横条构成的旗帜。如部分国旗、Pride旗等。")
+    print(f"本工具支持自定义分辨率、色彩颜色、色带宽度比例、图片类型等，并允许保存与加载预设。")
     print(f"by Txt-Text")
     print(f"")
     print(f"================================================================================")
@@ -557,7 +557,7 @@ def main():
             else:
                 log_info("已跳过预设，进入手动输入。")
 
-    # ---- 3. 汇总分辨率、色条（优先级: 命令行 > 预设 > 交互） ----
+    # ---- 3. 汇总分辨率、色带（优先级: 命令行 > 预设 > 交互） ----
     width = height = None
     strips = None
 
@@ -575,14 +575,14 @@ def main():
     elif preset_data and preset_data['width'] and preset_data['height']:
         width, height = preset_data['width'], preset_data['height']
 
-    # 色条
+    # 色带
     if args.strips:
         try:
             strips = parse_strips(args.strips)
             if preset_data and preset_data['strips']:
-                log_info(f"命令行覆盖色条: 使用 {len(strips)} 条新色条")
+                log_info(f"命令行覆盖色条: 使用 {len(strips)} 条新色带")
         except ValueError as e:
-            log_error(f"色条参数错误: {e}")
+            log_error(f"色带参数错误: {e}")
             return
     elif preset_data and preset_data['strips']:
         strips = preset_data['strips']
@@ -604,10 +604,10 @@ def main():
                 return
             width, height = wh
         if strips is None:
-            log_info("色条格式：颜色 比例，逗号分隔，比例可省略（默认 1.0）")
+            log_info("色带格式：颜色 比例，逗号分隔，比例可省略（默认 1.0）")
             log_info("例：#FF0000 1.0, #FFFFFF 1.5, #0000FF 1.0")
             ok, strips = ask(
-                "输入色条列表：",
+                "输入色带列表：",
                 validator=lambda s: (True, parse_strips(s)),
                 default=None, auto_yes=False)
             if not ok:
@@ -615,7 +615,7 @@ def main():
 
     # 打印概览
     total_w = sum(w for _, w in strips)
-    log_info(f"共 {len(strips)} 条色条，比例总和 = {total_w:g}")
+    log_info(f"共 {len(strips)} 条色带，比例总和 = {total_w:g}")
     pcts = [f"{w/total_w*100:.2f}%" for _, w in strips]
     log_info("各条占比: " + " / ".join(pcts))
 
