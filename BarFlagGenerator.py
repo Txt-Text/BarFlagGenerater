@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # BarFlagGenerator.py
-# 条形旗帜生成器 —— 入口脚本
+# 横条旗帜生成器 —— 入口脚本
 #
 # 用法:
 #   图形界面:   python BarFlagGenerator.py

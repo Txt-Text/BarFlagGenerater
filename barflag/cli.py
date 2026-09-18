@@ -21,7 +21,7 @@ def build_parser():
     """构造 argparse 解析器"""
     p = argparse.ArgumentParser(
         prog="BarFlagGenerator.py",
-        description="条形旗帜生成器（图形 / 交互 / 命令行 三种模式）",
+        description="横条旗帜生成器（图形 / 交互 / 命令行 三种模式）",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "示例:\n"
@@ -45,7 +45,7 @@ def build_parser():
     p.add_argument('-r', '--resolution', metavar='WxH',
                    help='分辨率，如 900x600')
     p.add_argument('-s', '--strips', metavar='LIST',
-                   help='色条列表，如 "#FF0000 1.0,#FFFFFF 1.5"')
+                   help='色带列表，如 "#FF0000 1.0,#FFFFFF 1.5"')
     p.add_argument('-f', '--format', dest='fmt', metavar='FMT',
                    choices=['svg', 'png', 'jpg', 'jpeg'],
                    help='输出格式: svg / png / jpg')
@@ -80,7 +80,7 @@ def _stdin_line(prompt):
 def _warn_no_stdin(rep=None):
     (rep or report.ConsoleReporter()).warn(
         "标准输入不可用，无法进行交互询问。"
-        "非交互环境请加上 -y，或用参数把分辨率、色条、格式都给全。")
+        "非交互环境请加上 -y，或用参数把分辨率、色带、格式都给全。")
 
 
 def ask_yes(prompt, auto_yes=False):
@@ -174,10 +174,10 @@ def ask(prompt, validator, on_fail=None, on_success=None,
 def show_banner():
     print(report.gray("=" * 80))
     print()
-    print("条形旗帜生成器 v2.0")
+    print("横条旗帜生成器 v2.0")
     print()
-    print("此工具可以生成以横条纯色色带构成的旗帜。如部分国旗、Pride旗等。")
-    print("本工具支持自定义分辨率、配色、色带宽度比例、图片类型等，并允许保存与加载预设。")
+    print("此工具可以生成以纯色横条构成的旗帜。如部分国旗、Pride旗等。")
+    print("本工具支持自定义分辨率、色彩颜色、色带宽度比例、图片类型等，并允许保存与加载预设。")
     print("by Txt-Text")
     print()
     print(report.gray("=" * 80))
@@ -267,7 +267,7 @@ def run(argv=None):
         # 2b. 没给 --preset，且非 -y 模式 → 交互询问
         preset_data = _pick_preset(rep, found)
 
-    # ---- 3. 汇总分辨率、色条（优先级: 命令行 > 预设 > 交互） ----
+    # ---- 3. 汇总分辨率、色带（优先级: 命令行 > 预设 > 交互） ----
     width = height = None
     strips = None
 
@@ -288,9 +288,9 @@ def run(argv=None):
         try:
             strips = core.parse_strips(args.strips)
             if preset_data and preset_data['strips']:
-                rep.info(f"命令行覆盖色条: 使用 {len(strips)} 条新色条")
+                rep.info(f"命令行覆盖色带: 使用 {len(strips)} 条新色带")
         except ValueError as e:
-            rep.error(f"色条参数错误: {e}")
+            rep.error(f"色带参数错误: {e}")
             return 1
     elif preset_data and preset_data['strips']:
         strips = preset_data['strips']
@@ -312,10 +312,10 @@ def run(argv=None):
                 return 1
             width, height = wh
         if strips is None:
-            rep.info("色条格式：颜色 比例，逗号分隔，比例可省略（默认 1.0）")
+            rep.info("色带格式：颜色 比例，逗号分隔，比例可省略（默认 1.0）")
             rep.info("例：#FF0000 1.0, #FFFFFF 1.5, #0000FF 1.0")
             ok, strips = ask(
-                "输入色条列表：",
+                "输入色带列表：",
                 validator=lambda s: (True, core.parse_strips(s)),
                 default=None, auto_yes=False)
             if not ok:

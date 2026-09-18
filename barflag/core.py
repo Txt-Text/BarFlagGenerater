@@ -78,7 +78,7 @@ def parse_resolution(text):
     return w, h
 
 
-# ============================ 色条 ============================
+# ============================ 色带 ============================
 
 # 合法颜色：3/4/6/8 位十六进制，或字母颜色名（red、blue 等）
 _HEX_LENS = (3, 4, 6, 8)
@@ -123,7 +123,7 @@ def normalize_color(text):
 
 def parse_strips(text):
     """
-    解析色条列表，返回 [(color, weight), ...]。
+    解析色带列表，返回 [(color, weight), ...]。
     接受: '#FF0000 1.0, #FFFFFF 1.5' / 'FF0000 1,FFFFFF' / 逗号或换行分隔。
     颜色可带/不带 #，自动补 #；比例可省略，默认 1.0。
     """
@@ -137,7 +137,7 @@ def parse_strips(text):
         m = _STRIP_RE.match(item)
         if not m:
             raise ValueError(
-                f"看不懂这一条色条: {item!r}"
+                f"无法解析这条色带: {item!r}"
                 f"（颜色应为 3/4/6/8 位十六进制或颜色名）"
             )
         color = m.group('color')
@@ -168,7 +168,7 @@ def parse_strips(text):
 
 def resolve_heights(strips, total_height):
     """
-    按比例把总高分配给每条色条，返回浮点高度列表。
+    按比例把总高分配给每条色带，返回浮点高度列表。
     末条用"总高 - 前面之和"补齐，消除浮点累积误差。
     """
     weights = [w for _, w in strips]
@@ -252,7 +252,7 @@ class FlagConfig:
     def summary_lines(self):
         """概览文字。命令行和 GUI 日志共用，保证两边说法一致。"""
         total = self.total_weight()
-        lines = [f"共 {len(self.strips)} 条色条，比例总和 = {total:g}"]
+        lines = [f"共 {len(self.strips)} 条色带，比例总和 = {total:g}"]
         lines.append("各条占比: " + " / ".join(f"{p:.2f}%" for p in self.percentages()))
         return lines
 

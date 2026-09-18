@@ -8,7 +8,7 @@ from __future__ import annotations
 
 
 def gen_svg(width, height, strips, heights, path):
-    """生成 SVG（纯文本拼接，零依赖）"""
+    """生成 SVG（纯文本拼接）"""
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" '
         f'width="{width}" height="{height}" viewBox="0 0 {width} {height}">'

@@ -17,12 +17,12 @@ VSVersionInfo(
       StringTable(
         '080404B0',
         [StringStruct('CompanyName', 'Txt-Text'),
-         StringStruct('FileDescription', '条形旗帜生成器'),
+         StringStruct('FileDescription', '横条旗帜生成器'),
          StringStruct('FileVersion', '2.0.0.0'),
          StringStruct('InternalName', 'BarFlagGenerator'),
          StringStruct('LegalCopyright', 'MIT License'),
          StringStruct('OriginalFilename', 'BarFlagGenerator.exe'),
-         StringStruct('ProductName', '条形旗帜生成器'),
+         StringStruct('ProductName', '横条旗帜生成器'),
          StringStruct('ProductVersion', '2.0.0.0')])
     ]),
     VarFileInfo([VarStruct('Translation', [2052, 1200])])

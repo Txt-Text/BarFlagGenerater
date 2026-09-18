@@ -20,7 +20,7 @@ from tkinter import colorchooser, filedialog, font as tkfont, simpledialog, ttk
 
 from . import core, deps, presets, report
 
-APP_TITLE = "条形旗帜生成器"
+APP_TITLE = "横条旗帜生成器"
 
 # ============================ 配色 ============================
 
@@ -147,11 +147,11 @@ class Theme:
         return PALETTE[self.dark]
 
 
-# ============================ 色条行 ============================
+# ============================ 色带行 ============================
 
 
 class StripRow:
-    """一条色条的可编辑行：色块 + 十六进制 + 比例 + 上移/下移/删除。"""
+    """一条色带的可编辑行：色块 + 十六进制 + 比例 + 上移/下移/删除。"""
 
     def __init__(self, app, color="#FFFFFF", weight=1.0):
         self.app = app
@@ -407,8 +407,8 @@ class App:
                                         command=self.toggle_theme)
         self.chk_dark.grid(row=4, column=1, sticky="w", padx=(10, 0), pady=(10, 0))
 
-        # 色条
-        sbox = ttk.LabelFrame(left, text="色条（点色块换颜色）", padding=10)
+        # 色带
+        sbox = ttk.LabelFrame(left, text="色带（点色块换颜色）", padding=10)
         sbox.grid(row=1, column=0, sticky="nsew", pady=(10, 0))
         sbox.columnconfigure(0, weight=1)
         sbox.rowconfigure(0, weight=1)
@@ -438,7 +438,7 @@ class App:
 
         bottom = ttk.Frame(sbox)
         bottom.grid(row=1, column=0, sticky="ew", pady=(8, 0))
-        ttk.Button(bottom, text="＋ 添加色条",
+        ttk.Button(bottom, text="＋ 添加色带",
                    command=lambda: self.add_row()).pack(side="left")
         ttk.Label(bottom, textvariable=self.var_dnd_hint
                   ).pack(side="left", padx=(10, 0))
@@ -550,7 +550,7 @@ class App:
                 self.var_out.set(f"{root}.{fmt}")
         self.schedule_preview()
 
-    # ============================ 色条行管理 ============================
+    # ============================ 色带行管理 ============================
 
     def add_row(self, color="#FFFFFF", weight=1.0):
         row = StripRow(self, color, weight)
@@ -637,7 +637,7 @@ class App:
             except ValueError:
                 continue
         if not strips:
-            self.var_preview_info.set("至少需要一条色条")
+            self.var_preview_info.set("至少需要一条色带")
             return
 
         cw = max(c.winfo_width(), 1)
@@ -662,7 +662,7 @@ class App:
         c.create_rectangle(x0, y0, x0 + dw, y0 + dh, outline=pal["border"])
 
         self.var_preview_info.set(
-            f"{width} × {height} · {len(strips)} 条色条 · 比例和 {total:g}")
+            f"{width} × {height} · {len(strips)} 条色带 · 比例和 {total:g}")
 
     # ============================ 预设 ============================
 
@@ -877,9 +877,9 @@ class App:
             try:
                 strips.append(row.get())
             except ValueError as e:
-                raise ValueError(f"第 {i} 条色条：{e}")
+                raise ValueError(f"第 {i} 条色带：{e}")
         if not strips:
-            raise ValueError("至少需要一条色条")
+            raise ValueError("至少需要一条色带")
 
         fmt = core.normalize_format(self.var_fmt.get()) or core.DEFAULT_FORMAT
         out = self.var_out.get().strip() or f"flag.{fmt}"

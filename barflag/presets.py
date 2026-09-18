@@ -78,7 +78,7 @@ def _first_token(text):
 
 def _looks_like_strip(s):
     """
-    粗略判断一行是不是色条（用于区分"色条行"和"真注释"）。
+    粗略判断一行是不是色带（用于区分"色带行"和"真注释"）。
     - 以 # 开头：看 # 后到第一个空白/冒号为止的 token 是不是合法十六进制
     - 不以 # 开头：看第一个 token 是不是纯字母（颜色名）
     """
@@ -96,7 +96,7 @@ def load_preset(path, reporter=None):
       {name, width, height, strips}
 
     strips 是 [(color, weight), ...]
-    非法行会警告并跳过；完全没有色条则抛 ValueError。
+    非法行会警告并跳过；完全没有色带则抛 ValueError。
     """
     reporter = reporter or report.NullReporter()
     preset = {
@@ -113,11 +113,11 @@ def load_preset(path, reporter=None):
             # 空行直接跳过
             if not stripped:
                 continue
-            # 色条段开始（只在还没进入时判断一次）
+            # 色带段开始（只在还没进入时判断一次）
             if not in_strips and stripped.lower().startswith('strips'):
                 in_strips = True
                 continue
-            # 色条段内：优先当色条解析；只有"看起来像注释"才跳过
+            # 色带段内：优先当色带解析；只有"看起来像注释"才跳过
             if in_strips:
                 if stripped.startswith('#') and not _looks_like_strip(stripped):
                     continue
@@ -128,7 +128,7 @@ def load_preset(path, reporter=None):
                     reporter.warn(
                         f"{os.path.basename(path)} 第 {lineno} 行跳过: {stripped!r}")
                 continue
-            # 非色条段：以 # 开头当注释跳过
+            # 非色带段：以 # 开头当注释跳过
             if stripped.startswith('#'):
                 continue
             # 键值行
@@ -157,18 +157,18 @@ def load_preset(path, reporter=None):
                 except ValueError:
                     pass
     if not preset['strips']:
-        raise ValueError(f"{os.path.basename(path)} 里没有可用色条")
+        raise ValueError(f"{os.path.basename(path)} 中无可用色带")
     return preset
 
 
 def save_preset(path, name, width, height, strips):
-    """写出预设文件（UTF-8，人读友好）"""
+    """写预设文件（UTF-8，人类可读）"""
     lines = [
-        "# 旗帜预设（可被文本编辑器编辑）",
+        "# 旗帜预设",
         f"name = {name}",
         f"resolution = {width}x{height}",
         "",
-        "# 色条：颜色 比例（比例可省略，默认 1.0）",
+        "# 色带：颜色 比例（比例可省略，默认 1.0）",
         "strips:",
     ]
     for color, w in strips:
