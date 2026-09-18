@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# 构建与发布产物（本地生成，不作为源码上传）
+build/
+dist/
+release/
+
+# 自动生成的打包素材
+packaging/icon.ico
+
+# 仅本地使用的自测脚本，不作为源码上传
+tests/
+
+# 运行期生成
+presets/
