@@ -7,7 +7,7 @@
 * console=True —— 必须有控制台，否则文本模式的输出全进黑洞。
 * 排除掉 tkinter / sv_ttk / tkinterdnd2 / barflag.gui ——
   命令行版不需要图形组件，排掉能省一大截体积。
-  代价是它的 --gui 用不了，会给出"请运行 BarFlagGenerater.exe"的提示。
+  代价是它的 --gui 用不了，会给出"请运行 BarFlagGenerator.exe"的提示。
 """
 
 import os
@@ -28,7 +28,7 @@ hiddenimports += [
 _icon = os.path.join(SPECPATH, "icon.ico")
 
 a = Analysis(
-    [os.path.join(ROOT, "BarFlagGenerater.py")],
+    [os.path.join(ROOT, "BarFlagGenerator.py")],
     pathex=[ROOT],
     binaries=binaries,
     datas=datas,
@@ -48,7 +48,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name="BarFlagGenerater-cli",
+    name="BarFlagGenerator-cli",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -70,5 +70,5 @@ coll = COLLECT(
     strip=False,
     upx=False,
     upx_exclude=[],
-    name="BarFlagGenerater-cli",
+    name="BarFlagGenerator-cli",
 )

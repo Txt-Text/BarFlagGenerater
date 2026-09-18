@@ -10,10 +10,10 @@
 
 产物全部放在 release/<版本号>/ 下：
 
-    BarFlagGenerater/        图形版（窗口模式，双击即用）
-    BarFlagGenerater-cli/    命令行版（保留控制台，方便写脚本调用）
-    BarFlagGenerater-<版本号>-win64.zip
-    BarFlagGenerater-cli-<版本号>-win64.zip
+    BarFlagGenerator/        图形版（窗口模式，双击即用）
+    BarFlagGenerator-cli/    命令行版（保留控制台，方便写脚本调用）
+    BarFlagGenerator-<版本号>-win64.zip
+    BarFlagGenerator-cli-<版本号>-win64.zip
 
 打包配置在 packaging/ 里（两份 spec、图标、版本信息），一般不用动。
 版本号来自 barflag/__init__.py 的 __version__。
@@ -50,8 +50,8 @@ VERSION = __version__
 RELEASE = os.path.join(ROOT, "release", VERSION)
 
 SPECS = [
-    ("图形版", "BarFlagGenerater.spec", "BarFlagGenerater"),
-    ("命令行版", "BarFlagGenerater-cli.spec", "BarFlagGenerater-cli"),
+    ("图形版", "BarFlagGenerator.spec", "BarFlagGenerator"),
+    ("命令行版", "BarFlagGenerator-cli.spec", "BarFlagGenerator-cli"),
 ]
 
 
@@ -196,10 +196,10 @@ def verify():
         if not cond:
             problems.append(label)
 
-    gui_dir = os.path.join(RELEASE, "BarFlagGenerater")
-    cli_dir = os.path.join(RELEASE, "BarFlagGenerater-cli")
-    gui_exe = os.path.join(gui_dir, "BarFlagGenerater.exe")
-    cli_exe = os.path.join(cli_dir, "BarFlagGenerater-cli.exe")
+    gui_dir = os.path.join(RELEASE, "BarFlagGenerator")
+    cli_dir = os.path.join(RELEASE, "BarFlagGenerator-cli")
+    gui_exe = os.path.join(gui_dir, "BarFlagGenerator.exe")
+    cli_exe = os.path.join(cli_dir, "BarFlagGenerator-cli.exe")
 
     ok(os.path.exists(gui_exe), "图形版 exe 存在")
     ok(os.path.exists(cli_exe), "命令行版 exe 存在")
@@ -278,7 +278,7 @@ def make_zip(folder, zip_path):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="打包 BarFlagGenerater release")
+    ap = argparse.ArgumentParser(description="打包 BarFlagGenerator release")
     ap.add_argument("--no-verify", action="store_true", help="跳过打包后的自检")
     ap.add_argument("--no-zip", action="store_true", help="只打包，不打 zip")
     ap.add_argument("--clean", action="store_true", help="只清理，不打包")

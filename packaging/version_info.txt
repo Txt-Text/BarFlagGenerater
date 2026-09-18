@@ -19,9 +19,9 @@ VSVersionInfo(
         [StringStruct('CompanyName', 'Txt-Text'),
          StringStruct('FileDescription', '条形旗帜生成器'),
          StringStruct('FileVersion', '2.0.0.0'),
-         StringStruct('InternalName', 'BarFlagGenerater'),
+         StringStruct('InternalName', 'BarFlagGenerator'),
          StringStruct('LegalCopyright', 'MIT License'),
-         StringStruct('OriginalFilename', 'BarFlagGenerater.exe'),
+         StringStruct('OriginalFilename', 'BarFlagGenerator.exe'),
          StringStruct('ProductName', '条形旗帜生成器'),
          StringStruct('ProductVersion', '2.0.0.0')])
     ]),

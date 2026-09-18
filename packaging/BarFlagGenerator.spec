@@ -35,7 +35,7 @@ hiddenimports += [
 _icon = os.path.join(SPECPATH, "icon.ico")
 
 a = Analysis(
-    [os.path.join(ROOT, "BarFlagGenerater.py")],
+    [os.path.join(ROOT, "BarFlagGenerator.py")],
     pathex=[ROOT],
     binaries=binaries,
     datas=datas,
@@ -54,7 +54,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name="BarFlagGenerater",
+    name="BarFlagGenerator",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -76,5 +76,5 @@ coll = COLLECT(
     strip=False,
     upx=False,
     upx_exclude=[],
-    name="BarFlagGenerater",
+    name="BarFlagGenerator",
 )

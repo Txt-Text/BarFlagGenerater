@@ -2,7 +2,7 @@
 """命令行前端：argparse + 交互式问答。
 
 这里只做"收集输入 / 展示输出"，业务规则全部来自 core / presets / deps。
-旧版 BarFlagGenerater.py 的行为在这里被完整保留。
+旧版 BarFlagGenerator.py 的行为在这里被完整保留。
 """
 
 from __future__ import annotations
@@ -20,17 +20,17 @@ from . import core, deps, presets, report
 def build_parser():
     """构造 argparse 解析器"""
     p = argparse.ArgumentParser(
-        prog="BarFlagGenerater.py",
+        prog="BarFlagGenerator.py",
         description="条形旗帜生成器（图形 / 交互 / 命令行 三种模式）",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "示例:\n"
-            "  图形界面: python BarFlagGenerater.py            （无参数即进 GUI）\n"
-            "  文本交互: python BarFlagGenerater.py --cli\n"
-            "  命令行:   python BarFlagGenerater.py -r 900x600 "
+            "  图形界面: python BarFlagGenerator.py            （无参数即进 GUI）\n"
+            "  文本交互: python BarFlagGenerator.py --cli\n"
+            "  命令行:   python BarFlagGenerator.py -r 900x600 "
             "-s \"#FF0000 1,#FFFFFF 1.5\" -f svg -o flag.svg\n"
-            "  用预设:   python BarFlagGenerater.py -p 2 -o out.png\n"
-            "  看预设:   python BarFlagGenerater.py --list-presets\n"
+            "  用预设:   python BarFlagGenerator.py -p 2 -o out.png\n"
+            "  看预设:   python BarFlagGenerator.py --list-presets\n"
             "\n提示: 只要带了任何参数就以命令行方式运行；\n"
             "      Windows CMD 下 -s 里的 # 和空格建议用双引号包起来，\n"
             "      PowerShell 可能需写成 -s '#FF0000 1,#FFFFFF 1.5'"
@@ -403,7 +403,7 @@ def run(argv=None):
 
 
 def main(argv=None):
-    """CLI 入口（供 BarFlagGenerater.py 调用）。"""
+    """CLI 入口（供 BarFlagGenerator.py 调用）。"""
     try:
         return run(argv)
     except KeyboardInterrupt:

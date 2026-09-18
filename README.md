@@ -1,4 +1,4 @@
-# 条形旗帜生成器 (BarFlagGenerater)
+# 条形旗帜生成器 (BarFlagGenerator)
 
 用横条纯色色带拼出旗帜的生成器。支持自定义分辨率、配色、色带宽度比例与输出格式（SVG / PNG / JPG），并能把配置保存成预设反复使用。
 
@@ -40,9 +40,9 @@
 
 ### 方式一：直接用 exe（不需要装 Python）
 
-1. 到 [Releases](../../releases) 下载 `BarFlagGenerater-<版本号>-win64.zip`
+1. 到 [Releases](../../releases) 下载 `BarFlagGenerator-<版本号>-win64.zip`
 2. 解压到**任意可写目录**（别放 `C:\Program Files`，那里写不了预设）
-3. 双击 `BarFlagGenerater.exe`
+3. 双击 `BarFlagGenerator.exe`
 
 首次运行 Windows 可能弹 SmartScreen 警告（因为 exe 没有代码签名），点「更多信息」→「仍要运行」即可。
 
@@ -52,8 +52,8 @@
 
 ```bash
 git clone <仓库地址>
-cd BarFlagGenerater
-python BarFlagGenerater.py
+cd BarFlagGenerator
+python BarFlagGenerator.py
 ```
 
 **不需要手动装依赖。** 首次运行缺什么会自动 `pip install`，安装进度会显示在日志区和状态栏上。想提前装好也行：
@@ -73,9 +73,9 @@ pip install pillow sv-ttk tkinterdnd2
 
 | 场景 | 命令 |
 | --- | --- |
-| 不带任何参数 | `python BarFlagGenerater.py` → 图形界面 |
-| 强制图形界面 | `python BarFlagGenerater.py --gui` |
-| 打包后的 exe | 直接双击 `BarFlagGenerater.exe` |
+| 不带任何参数 | `python BarFlagGenerator.py` → 图形界面 |
+| 强制图形界面 | `python BarFlagGenerator.py --gui` |
+| 打包后的 exe | 直接双击 `BarFlagGenerator.exe` |
 
 ### 界面分区
 
@@ -127,7 +127,7 @@ pip install pillow sv-ttk tkinterdnd2
 
 ```
 [*] 已启用 Sun Valley 主题（sv-ttk）。
-[*] 已扫描 D:\[...]\BarFlagGenerater 与 presets/ 目录，未发现预设文件。
+[*] 已扫描 D:\[...]\BarFlagGenerator 与 presets/ 目录，未发现预设文件。
 [+] 已生成: D:\[...]\flag.png
 [-] 分辨率必须是正整数，例如 900 × 600
 ```
@@ -161,18 +161,18 @@ pip install pillow sv-ttk tkinterdnd2
 
 | 你输入的命令 | 实际行为 |
 | --- | --- |
-| `python BarFlagGenerater.py` | **图形界面**（无参数默认进 GUI） |
-| `python BarFlagGenerater.py --gui` | 强制图形界面 |
-| `python BarFlagGenerater.py --cli` | **文本交互模式**（一问一答） |
-| `python BarFlagGenerater.py -r 900x600 -s "red 1" -o flag.png` | 命令行模式（只要带了参数就是 CLI） |
+| `python BarFlagGenerator.py` | **图形界面**（无参数默认进 GUI） |
+| `python BarFlagGenerator.py --gui` | 强制图形界面 |
+| `python BarFlagGenerator.py --cli` | **文本交互模式**（一问一答） |
+| `python BarFlagGenerator.py -r 900x600 -s "red 1" -o flag.png` | 命令行模式（只要带了参数就是 CLI） |
 
 打包后是**两个 exe**，各管一摊：
 
-- `BarFlagGenerater.exe` —— 图形版，双击就用
-- `BarFlagGenerater-cli.exe` —— 命令行版，保留控制台输出，写脚本用这个
+- `BarFlagGenerator.exe` —— 图形版，双击就用
+- `BarFlagGenerator-cli.exe` —— 命令行版，保留控制台输出，写脚本用这个
 
 > 图形版 exe 没有控制台，用命令行参数跑它虽然照常出图，但看不到任何输出。
-> 要命令行就用 `BarFlagGenerater-cli.exe`。
+> 要命令行就用 `BarFlagGenerator-cli.exe`。
 
 ### 参数一览
 
@@ -195,34 +195,34 @@ pip install pillow sv-ttk tkinterdnd2
 
 ```bash
 # 生成 SVG（不需要 Pillow）
-python BarFlagGenerater.py -r 900x600 -s "#FF0000 1,#FFFFFF 1.5" -f svg -o flag.svg
+python BarFlagGenerator.py -r 900x600 -s "#FF0000 1,#FFFFFF 1.5" -f svg -o flag.svg
 
 # 生成 PNG
-python BarFlagGenerater.py -r 1200x800 -s "navy 2,white 1,red 1" -f png -o flag.png
+python BarFlagGenerator.py -r 1200x800 -s "navy 2,white 1,red 1" -f png -o flag.png
 
 # 全部搞定，不需要任何交互确认
-python BarFlagGenerater.py -r 900x600 -s "red 1,white 1,blue 1" -o flag.png -f png -y
+python BarFlagGenerator.py -r 900x600 -s "red 1,white 1,blue 1" -o flag.png -f png -y
 
 # 用预设列表里的第 2 个
-python BarFlagGenerater.py -p 2 -o out.png
+python BarFlagGenerator.py -p 2 -o out.png
 
 # 用某个具体文件
-python BarFlagGenerater.py -p presets/横三色.flagpreset -o out.svg -f svg
+python BarFlagGenerator.py -p presets/横三色.flagpreset -o out.svg -f svg
 
 # 看看有哪些预设
-python BarFlagGenerater.py --list-presets
+python BarFlagGenerator.py --list-presets
 
 # 生成后顺便存成预设
-python BarFlagGenerater.py -r 900x600 -s "red 1,white 1" -o flag.png --save-preset 红白双色
+python BarFlagGenerator.py -r 900x600 -s "red 1,white 1" -o flag.png --save-preset 红白双色
 
 # 同名文件直接覆盖
-python BarFlagGenerater.py -r 300x200 -s "#123456" -o flag.png -w -y
+python BarFlagGenerator.py -r 300x200 -s "#123456" -o flag.png -w -y
 ```
 
-用的是 exe 的话，把 `python BarFlagGenerater.py` 换成 `BarFlagGenerater-cli.exe` 即可：
+用的是 exe 的话，把 `python BarFlagGenerator.py` 换成 `BarFlagGenerator-cli.exe` 即可：
 
 ```bash
-BarFlagGenerater-cli.exe -r 900x600 -s "red 1,white 1" -f svg -o flag.svg -y
+BarFlagGenerator-cli.exe -r 900x600 -s "red 1,white 1" -f svg -o flag.svg -y
 ```
 
 ### Windows 上的引号坑
@@ -231,10 +231,10 @@ BarFlagGenerater-cli.exe -r 900x600 -s "red 1,white 1" -f svg -o flag.svg -y
 
 ```bat
 :: CMD —— 用双引号
-python BarFlagGenerater.py -s "#FF0000 1,#FFFFFF 1.5" -o flag.png
+python BarFlagGenerator.py -s "#FF0000 1,#FFFFFF 1.5" -o flag.png
 
 :: PowerShell —— 建议用单引号，避免 # 被当成注释开头
-python BarFlagGenerater.py -s '#FF0000 1,#FFFFFF 1.5' -o flag.png
+python BarFlagGenerator.py -s '#FF0000 1,#FFFFFF 1.5' -o flag.png
 ```
 
 ### 文本交互模式
@@ -242,7 +242,7 @@ python BarFlagGenerater.py -s '#FF0000 1,#FFFFFF 1.5' -o flag.png
 `--cli` 进入一问一答模式，适合不想记参数的时候：
 
 ```
-$ python BarFlagGenerater.py --cli
+$ python BarFlagGenerator.py --cli
 [*] 已扫描 .../presets/ 目录，发现 2 个预设文件：
     1：红白蓝三色.flagpreset
     2：横三色.flagpreset
@@ -399,7 +399,7 @@ exe 走的是 Windows 控制台默认编码（简体中文系统上是 GBK）。
 加上 `-y`，所有询问都会自动 yes，完全不需要标准输入：
 
 ```bash
-python BarFlagGenerater.py -r 900x600 -s "red 1,white 1" -o flag.png -y
+python BarFlagGenerator.py -r 900x600 -s "red 1,white 1" -o flag.png -y
 ```
 
 如果没加 `-y` 而标准输入又不可用（管道关闭、没有终端），程序会打一条黄色警告并跳过该询问，不会崩。
@@ -435,10 +435,10 @@ python build.py
 
 ```
 release/2.0/
-├── BarFlagGenerater/                图形版（窗口模式，双击即用）
-├── BarFlagGenerater-cli/            命令行版（保留控制台）
-├── BarFlagGenerater-2.0-win64.zip
-└── BarFlagGenerater-cli-2.0-win64.zip
+├── BarFlagGenerator/                图形版（窗口模式，双击即用）
+├── BarFlagGenerator-cli/            命令行版（保留控制台）
+├── BarFlagGenerator-2.0-win64.zip
+└── BarFlagGenerator-cli-2.0-win64.zip
 ```
 
 版本号取自 `barflag/__init__.py` 里的 `__version__`，改那一处就够了。
@@ -484,7 +484,7 @@ python tests/test_gui.py --shot   # 顺便存一张截图
 ## 项目结构
 
 ```
-BarFlagGenerater.py      入口：决定跑 GUI 还是 CLI
+BarFlagGenerator.py      入口：决定跑 GUI 还是 CLI
 build.py                 一键打包 release
 
 barflag/                 全部源码
@@ -497,8 +497,8 @@ barflag/                 全部源码
 └── gui.py               tkinter 图形前端
 
 packaging/               打包配置
-├── BarFlagGenerater.spec
-├── BarFlagGenerater-cli.spec
+├── BarFlagGenerator.spec
+├── BarFlagGenerator-cli.spec
 └── version_info.txt
 
 docs/                    README 用的截图

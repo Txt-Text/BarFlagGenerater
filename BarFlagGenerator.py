@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-# BarFlagGenerater.py
+# BarFlagGenerator.py
 # 条形旗帜生成器 —— 入口脚本
 #
 # 用法:
-#   图形界面:   python BarFlagGenerater.py
-#   文本交互:   python BarFlagGenerater.py --cli
-#   命令行模式: python BarFlagGenerater.py -r 900x600 -s "#FF0000 1,#FFFFFF 1.5" -f svg -o flag.svg
-#   强制图形:   python BarFlagGenerater.py --gui
+#   图形界面:   python BarFlagGenerator.py
+#   文本交互:   python BarFlagGenerator.py --cli
+#   命令行模式: python BarFlagGenerator.py -r 900x600 -s "#FF0000 1,#FFFFFF 1.5" -f svg -o flag.svg
+#   强制图形:   python BarFlagGenerator.py --gui
 #
 # 规则：不带任何参数 → 图形界面；带了参数 → 命令行模式（除非显式 --gui）。
 #
@@ -28,8 +28,8 @@
 #
 # 打包 release：
 #   python build.py
-#   产物在 release/<版本号>/ 下：BarFlagGenerater/（图形版）、
-#   BarFlagGenerater-cli/（命令行版），以及对应的两个 zip。
+#   产物在 release/<版本号>/ 下：BarFlagGenerator/（图形版）、
+#   BarFlagGenerator-cli/（命令行版），以及对应的两个 zip。
 #   打包脚本会自动自检，并确认预设会存在 exe 同级目录、不会因重启丢失。
 #   打包配置在 packaging/ 里。
 #
@@ -64,7 +64,7 @@ def run_gui():
         if getattr(sys, "frozen", False):
             sys.stderr.write(
                 "这是命令行版（打包时未包含图形组件）。\n"
-                "要使用图形界面，请运行 BarFlagGenerater.exe。\n")
+                "要使用图形界面，请运行 BarFlagGenerator.exe。\n")
         else:
             sys.stderr.write(
                 "无法启动图形界面：当前 Python 没有 tkinter（标准库组件，pip 装不了）。\n"
