@@ -1,6 +1,6 @@
 # 横条旗帜生成器 (BarFlagGenerator)
 
-适用于由纯色横条拼出的旗帜/图片。支持自定义分辨率、配色、色带宽度比例与输出格式（SVG / PNG / JPG），并能把配置保存成预设反复使用。
+适用于由纯色横条组成的旗帜/图片。支持自定义分辨率、配色、色带宽度比例与输出格式（SVG / PNG / JPG），并能把配置保存成预设反复使用或分发给他人。
 
 同时提供**图形界面**和**命令行**两套前端，功能完全一致。
 
@@ -38,17 +38,17 @@
 
 ## 快速开始
 
-### 方式一：直接用 exe（不需要装 Python）
+### 方式一：绿色版 exe（无需 Python 环境）
 
 1. 到 [Releases](../../releases) 下载 `BarFlagGenerator-<版本号>-win64.zip`
-2. 解压到**任意可写目录**（别放 `C:\Program Files`，那里写不了预设）
+2. 解压到**任意可写目录**（如 `C:\Program Files` 无法进行写操作，写入预设将失败。同时 Windows 不允许程序在管理员权限下接收拖拽操作。）
 3. 双击 `BarFlagGenerator.exe`
 
 首次运行 Windows 可能弹 SmartScreen 警告（因为 exe 没有代码签名），点「更多信息」→「仍要运行」即可。
 
 ### 方式二：从源码运行
 
-需要 Python 3.9 或更高版本（开发和实测环境是 3.14.7）。
+需要 Python 3.9 或更高版本（开发和实测环境为 3.14.7）。
 
 ```bash
 git clone <仓库地址>
@@ -56,7 +56,7 @@ cd BarFlagGenerator
 python BarFlagGenerator.py
 ```
 
-**不需要手动装依赖。** 首次运行缺什么会自动 `pip install`，安装进度会显示在日志区和状态栏上。想提前装好也行：
+**不需要特意手动装依赖。** 首次运行缺少依赖会自动 `pip install`，安装进度会显示在日志区和状态栏上。也可以提前装好：
 
 ```bash
 pip install pillow sv-ttk tkinterdnd2
@@ -194,7 +194,7 @@ pip install pillow sv-ttk tkinterdnd2
 ### 常见用法
 
 ```bash
-# 生成 SVG（不需要 Pillow）
+# 生成 SVG（无需 Pillow 包）
 python BarFlagGenerator.py -r 900x600 -s "#FF0000 1,#FFFFFF 1.5" -f svg -o flag.svg
 
 # 生成 PNG
